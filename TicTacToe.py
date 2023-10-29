@@ -86,6 +86,9 @@ def draw_xo(row, column):
 
 def winner():
     global game_board
+    global game
+
+    game_won = False
     for i in range(3):
         # row wins
         if game_board[i][0] == game_board[i][1] == game_board[i][2] != 0:
@@ -94,6 +97,7 @@ def winner():
                         (screen_width, (i + 1) * screen_height / 3 - screen_height / 6),
                         3)
             messages(player_char)
+            game_won = True
         # column wins
         elif game_board[0][i] == game_board[1][i] == game_board[2][i] != 0:
             pygame.draw.line(screen, white_colour,
@@ -101,17 +105,20 @@ def winner():
                         ((i + 1) * screen_width / 3 - screen_width / 5.5, screen_height),
                         3)
             messages(player_char)
+            game_won = True
 
     # diagonal wins
     if game_board[0][0] == game_board[1][1] == game_board[2][2] != 0: 
         pygame.draw.line(screen, white_colour, (50, 50), (550,550), 3)
         messages(player_char)
+        game_won = True
     elif game_board[0][2] == game_board[1][1] == game_board[2][0] != 0:
         pygame.draw.line(screen, white_colour, (550, 50), (50,550), 3)
         messages(player_char)
+        game_won = True
     
     #  draw
-    if not any(0 in board for board in game_board):
+    if not any(0 in board for board in game_board) and not game_won:
         messages(player_char, True)
 
 def start():
